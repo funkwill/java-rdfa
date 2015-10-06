@@ -6,12 +6,15 @@
 
 package rdfa;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.util.FileManager;
+
 import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.util.FileManager;
+
 import net.rootdev.javardfa.Version;
 
 /**

@@ -5,10 +5,7 @@
  */
 package net.rootdev.javardfa.jena;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.RDFErrorHandler;
-import com.hp.hpl.jena.rdf.model.RDFReader;
-import com.hp.hpl.jena.rdf.model.impl.RDFReaderFImpl;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -16,6 +13,11 @@ import net.rootdev.javardfa.Parser;
 import net.rootdev.javardfa.ParserFactory;
 import net.rootdev.javardfa.Setting;
 import net.rootdev.javardfa.StatementSink;
+
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.RDFErrorHandler;
+import org.apache.jena.rdf.model.RDFReader;
+import org.apache.jena.rdf.model.impl.RDFReaderFImpl;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -27,6 +29,8 @@ import org.xml.sax.XMLReader;
 public class RDFaReader implements RDFReader {
 
     static {
+        RDFReaderFImpl.setBaseReaderClassName("HTML-11", HTMLRDFa11Reader.class.getName());
+        RDFReaderFImpl.setBaseReaderClassName("XHTML-11", XHTMLRDFa11Reader.class.getName());
         RDFReaderFImpl.setBaseReaderClassName("HTML", HTMLRDFaReader.class.getName());
         RDFReaderFImpl.setBaseReaderClassName("XHTML", XHTMLRDFaReader.class.getName());
     }
@@ -44,6 +48,27 @@ public class RDFaReader implements RDFReader {
     public static class XHTMLRDFaReader extends RDFaReader {
         @Override public XMLReader getReader() throws SAXException {
             return ParserFactory.createNonvalidatingReader();
+        }
+    }
+    
+    public static class XHTMLRDFa11Reader extends RDFaReader {
+    	@Override public XMLReader getReader() throws SAXException {
+            return ParserFactory.createNonvalidatingReader();
+        }
+    	
+    	@Override public void initParser(Parser parser) {
+            parser.enable(Setting.OnePointOne);
+        }
+    }
+    
+    public static class HTMLRDFa11Reader extends RDFaReader {
+        @Override public XMLReader getReader() {
+            return ParserFactory.createHTML5Reader();
+        }
+
+        @Override public void initParser(Parser parser) {
+            parser.enable(Setting.ManualNamespaces);
+            parser.enable(Setting.OnePointOne);
         }
     }
 

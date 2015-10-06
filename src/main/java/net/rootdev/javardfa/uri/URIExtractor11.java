@@ -25,7 +25,7 @@ public class URIExtractor11 implements URIExtractor {
     private Set<Setting> settings;
     private final Resolver resolver;
 
-    public URIExtractor11(Resolver resolver) {
+    public URIExtractor11(Resolver resolver) {    	
         this.resolver = resolver;
     }
 

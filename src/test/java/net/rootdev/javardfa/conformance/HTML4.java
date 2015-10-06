@@ -5,7 +5,6 @@
 
 package net.rootdev.javardfa.conformance;
 
-import com.hp.hpl.jena.rdf.model.Model;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Collection;
@@ -13,6 +12,8 @@ import java.util.Collections;
 import net.rootdev.javardfa.jena.JenaStatementSink;
 import net.rootdev.javardfa.ParserFactory;
 import net.rootdev.javardfa.ParserFactory.Format;
+
+import org.apache.jena.rdf.model.Model;
 import org.junit.runners.Parameterized.Parameters;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;

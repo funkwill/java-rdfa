@@ -6,6 +6,7 @@
 package net.rootdev.javardfa;
 
 import net.rootdev.javardfa.uri.URIExtractor10;
+import net.rootdev.javardfa.uri.URIExtractor11;
 import net.rootdev.javardfa.uri.URIExtractor;
 import net.rootdev.javardfa.uri.IRIResolver;
 import net.rootdev.javardfa.literal.LiteralCollector;
@@ -38,7 +39,7 @@ public class Parser implements ContentHandler, ErrorHandler {
     private final StatementSink sink;
     private final Set<Setting> settings;
     private final LiteralCollector literalCollector;
-    private final URIExtractor extractor;
+    private  URIExtractor extractor;
 
     public Parser(StatementSink sink) {
         this(   sink,
@@ -69,10 +70,20 @@ public class Parser implements ContentHandler, ErrorHandler {
     
     public void enable(Setting setting) {
         settings.add(setting);
+        if (setting == Setting.OnePointOne) {
+        	//changing onepoint one setting after initialization
+        	this.extractor = new URIExtractor11(new IRIResolver());
+        }
+        extractor.setSettings(settings);
     }
 
     public void disable(Setting setting) {
         settings.remove(setting);
+        if (setting == Setting.OnePointOne) {
+        	//changing onepoint one setting after initialization
+        	this.extractor = new URIExtractor10(new IRIResolver());
+        }
+        extractor.setSettings(settings);
     }
     
     public void setBase(String base) {
